@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { PlusCircle, History, CreditCard, BankNote, Wallet, PiggyBank } from "lucide-react";
+import { PlusCircle, History, CreditCard, Banknote, Wallet, PiggyBank } from "lucide-react";
 
 export const QuickActions = () => {
   return (
@@ -32,7 +32,7 @@ export const QuickActions = () => {
           variant="outline"
           className="flex flex-col items-center p-4 h-auto"
         >
-          <BankNote className="h-6 w-6 mb-2" />
+          <Banknote className="h-6 w-6 mb-2" />
           <span>EFT Payment</span>
         </Button>
         <Button
