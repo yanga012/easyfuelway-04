@@ -1,11 +1,26 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { LoginForm } from "@/components/auth/LoginForm";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary-100 to-primary-200 p-4">
+      <div className="w-full max-w-md">
+        <div className="bg-white rounded-lg shadow-xl p-8 space-y-6">
+          <div className="text-center space-y-2">
+            <h1 className="text-3xl font-bold text-gray-900">
+              Welcome to MoveEasy Mzantsi
+            </h1>
+            <p className="text-gray-600">
+              Your trusted partner for fuel credit management
+            </p>
+          </div>
+          <LoginForm />
+          <div className="text-center text-sm text-gray-600">
+            Don't have an account?{" "}
+            <a href="#" className="text-primary hover:underline">
+              Sign up
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );
