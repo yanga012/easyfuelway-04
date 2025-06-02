@@ -39,13 +39,13 @@ export const LoginForm = () => {
     <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-sm">
       <div className="space-y-2">
         <Select onValueChange={setPlatform} value={platform}>
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select your e-hailing platform" />
+          <SelectTrigger className="w-full bg-black/60 border-yellow-500/30 text-yellow-300 focus:border-yellow-400">
+            <SelectValue placeholder="Select your e-hailing platform" className="placeholder:text-yellow-500/50" />
           </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="uber">Uber</SelectItem>
-            <SelectItem value="bolt">Bolt</SelectItem>
-            <SelectItem value="indidi">InDidi</SelectItem>
+          <SelectContent className="bg-black border-yellow-500/30">
+            <SelectItem value="uber" className="text-yellow-300 focus:bg-yellow-500/20 focus:text-yellow-200">Uber</SelectItem>
+            <SelectItem value="bolt" className="text-yellow-300 focus:bg-yellow-500/20 focus:text-yellow-200">Bolt</SelectItem>
+            <SelectItem value="indidi" className="text-yellow-300 focus:bg-yellow-500/20 focus:text-yellow-200">InDidi</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -55,7 +55,7 @@ export const LoginForm = () => {
           placeholder="Email or Phone Number"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full"
+          className="w-full bg-black/60 border-yellow-500/30 text-yellow-300 placeholder:text-yellow-500/50 focus:border-yellow-400"
         />
       </div>
       <div className="space-y-2">
@@ -64,14 +64,14 @@ export const LoginForm = () => {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full"
+          className="w-full bg-black/60 border-yellow-500/30 text-yellow-300 placeholder:text-yellow-500/50 focus:border-yellow-400"
         />
       </div>
-      <Button type="submit" className="w-full bg-primary hover:bg-primary-700">
+      <Button type="submit" className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-black font-medium transition-all">
         Login
       </Button>
       <div className="text-center">
-        <a href="#" className="text-primary hover:underline text-sm">
+        <a href="#" className="text-yellow-400 hover:text-yellow-300 hover:underline text-sm transition-colors">
           Forgot Password?
         </a>
       </div>
