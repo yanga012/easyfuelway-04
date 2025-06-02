@@ -12,12 +12,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { supabase } from "@/integrations/supabase/client";
 
 const Auth = () => {
   const { signIn, signUp } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [platform, setPlatform] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [idNumber, setIdNumber] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSignIn = async (e: React.FormEvent) => {
@@ -55,10 +58,10 @@ const Auth = () => {
     e.preventDefault();
     setLoading(true);
 
-    if (!platform) {
+    if (!platform || !fullName || !idNumber) {
       toast({
-        title: "Platform Required",
-        description: "Please select your e-hailing platform",
+        title: "Missing Information",
+        description: "Please fill in all required fields",
         variant: "destructive",
       });
       setLoading(false);
@@ -74,6 +77,21 @@ const Auth = () => {
         variant: "destructive",
       });
     } else {
+      // Create user profile after successful signup
+      try {
+        const { data: userData } = await supabase.auth.getUser();
+        if (userData.user) {
+          await supabase.from('user_profiles').insert({
+            id: userData.user.id,
+            full_name: fullName,
+            id_number: idNumber,
+            platform: platform,
+          });
+        }
+      } catch (profileError) {
+        console.error('Error creating profile:', profileError);
+      }
+
       toast({
         title: "Registration Successful!",
         description: "Please check your email to verify your account",
@@ -91,7 +109,7 @@ const Auth = () => {
               EasyFuel
             </h1>
             <p className="text-[#F97316]/80 text-sm">
-              Fuel credit management platform
+              AI-powered fuel credit management
             </p>
           </div>
 
@@ -148,6 +166,25 @@ const Auth = () => {
 
             <TabsContent value="signup">
               <form onSubmit={handleSignUp} className="space-y-4">
+                <Input
+                  type="text"
+                  placeholder="Full Name"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  className="bg-black/60 border-yellow-500/30 text-yellow-300 placeholder:text-yellow-500/50 focus:border-yellow-400"
+                  required
+                />
+
+                <Input
+                  type="text"
+                  placeholder="ID Number (13 digits)"
+                  value={idNumber}
+                  onChange={(e) => setIdNumber(e.target.value)}
+                  className="bg-black/60 border-yellow-500/30 text-yellow-300 placeholder:text-yellow-500/50 focus:border-yellow-400"
+                  maxLength={13}
+                  required
+                />
+
                 <Select onValueChange={setPlatform} value={platform}>
                   <SelectTrigger className="w-full bg-black/60 border-yellow-500/30 text-yellow-300 focus:border-yellow-400">
                     <SelectValue placeholder="Select your e-hailing platform" />

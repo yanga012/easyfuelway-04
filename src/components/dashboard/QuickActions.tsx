@@ -1,57 +1,95 @@
 
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { PlusCircle, History, CreditCard, Banknote, Wallet, PiggyBank } from "lucide-react";
+import { Car, CreditCard, FileCheck, Fuel, Smartphone, Wallet } from "lucide-react";
+import { useProfile } from "@/hooks/useProfile";
 
 export const QuickActions = () => {
+  const { profile, vehicles } = useProfile();
+
+  const actions = [
+    {
+      icon: Fuel,
+      title: "Generate Fuel Token",
+      description: "AI-powered fuel access token",
+      color: "bg-green-500/20 border-green-500/30 hover:bg-green-500/30",
+      disabled: !profile?.id_verified || vehicles.length === 0,
+      badge: profile?.id_verified && vehicles.length > 0 ? null : "Setup Required"
+    },
+    {
+      icon: Car,
+      title: "Add Vehicle",
+      description: "Register your vehicle details",
+      color: "bg-blue-500/20 border-blue-500/30 hover:bg-blue-500/30",
+      disabled: false,
+    },
+    {
+      icon: FileCheck,
+      title: "ID Verification",
+      description: "Verify your identity",
+      color: "bg-purple-500/20 border-purple-500/30 hover:bg-purple-500/30",
+      disabled: false,
+      badge: profile?.id_verified ? "Verified" : "Required"
+    },
+    {
+      icon: CreditCard,
+      title: "Load Credit",
+      description: "Add funds to your account",
+      color: "bg-yellow-500/20 border-yellow-500/30 hover:bg-yellow-500/30",
+      disabled: !profile?.id_verified,
+    },
+    {
+      icon: Smartphone,
+      title: "Mobile Wallet",
+      description: "Link mobile payment",
+      color: "bg-pink-500/20 border-pink-500/30 hover:bg-pink-500/30",
+      disabled: false,
+    },
+    {
+      icon: Wallet,
+      title: "Transaction History",
+      description: "View your fuel purchases",
+      color: "bg-indigo-500/20 border-indigo-500/30 hover:bg-indigo-500/30",
+      disabled: false,
+    },
+  ];
+
   return (
-    <div className="space-y-4">
-      <h3 className="font-semibold text-lg bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 bg-clip-text text-transparent">
-        Quick Actions
-      </h3>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-        <Button
-          variant="outline"
-          className="flex flex-col items-center p-4 h-auto bg-black/95 border-yellow-500/30 text-yellow-400 hover:text-yellow-300 hover:border-yellow-400/50 hover:bg-yellow-500/10 transition-all"
-        >
-          <PlusCircle className="h-6 w-6 mb-2" />
-          <span>Load Credits</span>
-        </Button>
-        <Button
-          variant="outline"
-          className="flex flex-col items-center p-4 h-auto bg-black/95 border-yellow-500/30 text-yellow-400 hover:text-yellow-300 hover:border-yellow-400/50 hover:bg-yellow-500/10 transition-all"
-        >
-          <History className="h-6 w-6 mb-2" />
-          <span>Transactions</span>
-        </Button>
-        <Button
-          variant="outline"
-          className="flex flex-col items-center p-4 h-auto bg-black/95 border-yellow-500/30 text-yellow-400 hover:text-yellow-300 hover:border-yellow-400/50 hover:bg-yellow-500/10 transition-all"
-        >
-          <CreditCard className="h-6 w-6 mb-2" />
-          <span>Card Payment</span>
-        </Button>
-        <Button
-          variant="outline"
-          className="flex flex-col items-center p-4 h-auto bg-black/95 border-yellow-500/30 text-yellow-400 hover:text-yellow-300 hover:border-yellow-400/50 hover:bg-yellow-500/10 transition-all"
-        >
-          <Banknote className="h-6 w-6 mb-2" />
-          <span>EFT Payment</span>
-        </Button>
-        <Button
-          variant="outline"
-          className="flex flex-col items-center p-4 h-auto bg-black/95 border-yellow-500/30 text-yellow-400 hover:text-yellow-300 hover:border-yellow-400/50 hover:bg-yellow-500/10 transition-all"
-        >
-          <Wallet className="h-6 w-6 mb-2" />
-          <span>Bank Deposit</span>
-        </Button>
-        <Button
-          variant="outline"
-          className="flex flex-col items-center p-4 h-auto bg-black/95 border-yellow-500/30 text-yellow-400 hover:text-yellow-300 hover:border-yellow-400/50 hover:bg-yellow-500/10 transition-all"
-        >
-          <PiggyBank className="h-6 w-6 mb-2" />
-          <span>Auto-Deduct</span>
-        </Button>
-      </div>
-    </div>
+    <Card className="bg-black/95 border-yellow-500/30 shadow-xl shadow-yellow-500/20">
+      <CardHeader>
+        <CardTitle className="text-yellow-400">Quick Actions</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {actions.map((action, index) => (
+            <Button
+              key={index}
+              variant="outline"
+              className={`h-auto p-4 flex flex-col items-center gap-3 ${action.color} ${
+                action.disabled ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
+              disabled={action.disabled}
+            >
+              <div className="relative">
+                <action.icon className="h-8 w-8" />
+                {action.badge && (
+                  <span className={`absolute -top-2 -right-2 px-1 py-0.5 text-xs rounded-full ${
+                    action.badge === "Verified" ? "bg-green-500 text-white" : 
+                    action.badge === "Required" ? "bg-red-500 text-white" : 
+                    "bg-orange-500 text-white"
+                  }`}>
+                    {action.badge}
+                  </span>
+                )}
+              </div>
+              <div className="text-center">
+                <p className="font-medium text-sm">{action.title}</p>
+                <p className="text-xs opacity-80">{action.description}</p>
+              </div>
+            </Button>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
   );
 };
