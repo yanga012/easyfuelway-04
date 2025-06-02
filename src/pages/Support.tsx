@@ -1,9 +1,9 @@
-
+import { Navigation } from "@/components/dashboard/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
-import { MessageSquare, PhoneCall, Mail, HelpCircle, Info } from "lucide-react";
+import { MessageSquare, PhoneCall, Mail, Info } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 
@@ -24,6 +24,7 @@ const Support = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black">
+      <Navigation />
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8 bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 bg-clip-text text-transparent">
           Customer Support
@@ -45,7 +46,7 @@ const Support = () => {
               <h2 className="text-xl font-semibold text-yellow-400">Email Support</h2>
             </div>
             <p className="text-yellow-500/80 mb-4">Response within 24 hours</p>
-            <p className="font-semibold text-yellow-300">support@moveeasy.com</p>
+            <p className="font-semibold text-yellow-300">support@easyfuel.co.za</p>
           </Card>
         </div>
 
@@ -100,16 +101,16 @@ const Support = () => {
           </div>
           <div className="space-y-4">
             <div>
-              <h3 className="font-medium mb-2 text-yellow-300">How do I top up my account?</h3>
-              <p className="text-yellow-500/80">You can top up your account through bank transfer, EFT, or automatic deduction from your e-hailing earnings.</p>
+              <h3 className="font-medium mb-2 text-yellow-300">How does the fuel credit system work?</h3>
+              <p className="text-yellow-500/80">Deposit the equivalent of 1 fuel tank and get access to 3 tanks worth of fuel credit. Pay back as you earn from your driving.</p>
             </div>
             <div>
               <h3 className="font-medium mb-2 text-yellow-300">When are the automatic deductions processed?</h3>
               <p className="text-yellow-500/80">Automatic deductions are processed weekly, every Monday for the previous week's earnings.</p>
             </div>
             <div>
-              <h3 className="font-medium mb-2 text-yellow-300">How long does it take to process a refund?</h3>
-              <p className="text-yellow-500/80">Refunds are typically processed within 3-5 business days after approval.</p>
+              <h3 className="font-medium mb-2 text-yellow-300">Which fuel stations can I use?</h3>
+              <p className="text-yellow-500/80">You can use your fuel credit at any of our partner stations including Shell, BP, Engen, and Sasol.</p>
             </div>
           </div>
         </Card>
