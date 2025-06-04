@@ -156,6 +156,7 @@ export type Database = {
         Row: {
           barcode: string | null
           category: string | null
+          cost_price: number | null
           created_at: string | null
           description: string | null
           id: string
@@ -164,12 +165,14 @@ export type Database = {
           price: number
           quantity: number
           reorder_point: number
+          supplier_name: string | null
           updated_at: string | null
           user_id: string
         }
         Insert: {
           barcode?: string | null
           category?: string | null
+          cost_price?: number | null
           created_at?: string | null
           description?: string | null
           id?: string
@@ -178,12 +181,14 @@ export type Database = {
           price?: number
           quantity?: number
           reorder_point?: number
+          supplier_name?: string | null
           updated_at?: string | null
           user_id: string
         }
         Update: {
           barcode?: string | null
           category?: string | null
+          cost_price?: number | null
           created_at?: string | null
           description?: string | null
           id?: string
@@ -192,6 +197,7 @@ export type Database = {
           price?: number
           quantity?: number
           reorder_point?: number
+          supplier_name?: string | null
           updated_at?: string | null
           user_id?: string
         }
@@ -202,6 +208,7 @@ export type Database = {
           account_type: string | null
           business_name: string | null
           created_at: string | null
+          email: string | null
           full_name: string | null
           id: string
           updated_at: string | null
@@ -210,6 +217,7 @@ export type Database = {
           account_type?: string | null
           business_name?: string | null
           created_at?: string | null
+          email?: string | null
           full_name?: string | null
           id: string
           updated_at?: string | null
@@ -218,6 +226,7 @@ export type Database = {
           account_type?: string | null
           business_name?: string | null
           created_at?: string | null
+          email?: string | null
           full_name?: string | null
           id?: string
           updated_at?: string | null
@@ -304,8 +313,8 @@ export type Database = {
           created_at: string | null
           id: string
           notes: string | null
-          product_name: string
           quantity: number
+          requested_product_details: string
           status: string | null
           urgency: string | null
           user_id: string
@@ -314,8 +323,8 @@ export type Database = {
           created_at?: string | null
           id?: string
           notes?: string | null
-          product_name: string
           quantity: number
+          requested_product_details: string
           status?: string | null
           urgency?: string | null
           user_id: string
@@ -324,8 +333,8 @@ export type Database = {
           created_at?: string | null
           id?: string
           notes?: string | null
-          product_name?: string
           quantity?: number
+          requested_product_details?: string
           status?: string | null
           urgency?: string | null
           user_id?: string

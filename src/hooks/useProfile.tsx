@@ -123,11 +123,38 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
     if (!user) return;
 
     try {
-      const { error } = await supabase
+      // Check if profile exists
+      const { data: existingProfile } = await supabase
         .from('user_profiles')
-        .upsert({ id: user.id, ...data });
+        .select('*')
+        .eq('id', user.id)
+        .single();
 
-      if (error) throw error;
+      if (existingProfile) {
+        // Update existing profile
+        const { error } = await supabase
+          .from('user_profiles')
+          .update(data)
+          .eq('id', user.id);
+
+        if (error) throw error;
+      } else {
+        // Create new profile - ensure required fields are present
+        const profileData = {
+          id: user.id,
+          full_name: data.full_name || '',
+          id_number: data.id_number || '',
+          platform: data.platform || 'uber',
+          ...data
+        };
+
+        const { error } = await supabase
+          .from('user_profiles')
+          .insert(profileData);
+
+        if (error) throw error;
+      }
+
       await fetchProfile();
     } catch (error) {
       console.error('Error updating profile:', error);
