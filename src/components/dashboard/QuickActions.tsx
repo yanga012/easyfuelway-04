@@ -35,7 +35,7 @@ export const QuickActions = () => {
       icon: CreditCard,
       title: "Load Credit",
       description: "Add funds to your account",
-      color: "bg-yellow-500/20 border-yellow-500/30 hover:bg-yellow-500/30",
+      color: "bg-orange-500/20 border-orange-500/30 hover:bg-orange-500/30",
       disabled: !profile?.id_verified,
     },
     {
@@ -55,9 +55,9 @@ export const QuickActions = () => {
   ];
 
   return (
-    <Card className="bg-black/95 border-yellow-500/30 shadow-xl shadow-yellow-500/20">
+    <Card className="bg-white/95 border-blue-200 shadow-xl shadow-blue-500/10">
       <CardHeader>
-        <CardTitle className="text-yellow-400">Quick Actions</CardTitle>
+        <CardTitle className="text-blue-900">Quick Actions</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

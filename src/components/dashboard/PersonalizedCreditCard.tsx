@@ -11,28 +11,28 @@ export const PersonalizedCreditCard = () => {
   const usagePercentage = fuelCredits ? (fuelCredits.balance / fuelCredits.credit_limit) * 100 : 0;
 
   return (
-    <Card className="bg-gradient-to-br from-yellow-500/20 to-yellow-600/20 border-yellow-500/30 shadow-xl shadow-yellow-500/20">
+    <Card className="bg-gradient-to-br from-blue-600/20 to-blue-700/20 border-blue-500/30 shadow-xl shadow-blue-500/20">
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="text-yellow-400 flex items-center gap-2">
+        <CardTitle className="text-blue-400 flex items-center gap-2">
           <CreditCard className="h-5 w-5" />
           {profile?.full_name ? `${profile.full_name}'s Fuel Credit` : 'Fuel Credit'}
         </CardTitle>
         <div className="text-right">
-          <p className="text-xs text-yellow-500/80">Available Credit</p>
-          <p className="text-lg font-bold text-yellow-400">R{availableCredit.toFixed(2)}</p>
+          <p className="text-xs text-blue-300/80">Available Credit</p>
+          <p className="text-lg font-bold text-blue-400">R{availableCredit.toFixed(2)}</p>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
-            <p className="text-sm text-yellow-500/80">Current Balance</p>
-            <p className="text-2xl font-bold text-yellow-400">
+            <p className="text-sm text-blue-300/80">Current Balance</p>
+            <p className="text-2xl font-bold text-blue-400">
               R{fuelCredits?.balance.toFixed(2) || '0.00'}
             </p>
           </div>
           <div className="space-y-2">
-            <p className="text-sm text-yellow-500/80">Credit Limit</p>
-            <p className="text-xl font-semibold text-yellow-300">
+            <p className="text-sm text-blue-300/80">Credit Limit</p>
+            <p className="text-xl font-semibold text-blue-300">
               R{fuelCredits?.credit_limit.toFixed(2) || '1000.00'}
             </p>
           </div>
@@ -40,12 +40,12 @@ export const PersonalizedCreditCard = () => {
         
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
-            <span className="text-yellow-500/80">Usage</span>
-            <span className="text-yellow-400">{usagePercentage.toFixed(1)}%</span>
+            <span className="text-blue-300/80">Usage</span>
+            <span className="text-blue-400">{usagePercentage.toFixed(1)}%</span>
           </div>
-          <div className="w-full bg-black/50 rounded-full h-2">
+          <div className="w-full bg-slate-800/50 rounded-full h-2">
             <div 
-              className="bg-gradient-to-r from-yellow-400 to-yellow-500 h-2 rounded-full transition-all duration-300"
+              className="bg-gradient-to-r from-blue-400 to-blue-500 h-2 rounded-full transition-all duration-300"
               style={{ width: `${Math.min(usagePercentage, 100)}%` }}
             />
           </div>
@@ -54,7 +54,7 @@ export const PersonalizedCreditCard = () => {
         <div className="flex gap-2 pt-2">
           <Button 
             size="sm" 
-            className="flex-1 bg-yellow-500 hover:bg-yellow-600 text-black"
+            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
           >
             <Plus className="h-4 w-4 mr-2" />
             Load Credit
@@ -62,7 +62,7 @@ export const PersonalizedCreditCard = () => {
           <Button 
             size="sm" 
             variant="outline" 
-            className="flex-1 border-yellow-500/50 text-yellow-400 hover:bg-yellow-500/10"
+            className="flex-1 border-blue-500/50 text-blue-400 hover:bg-blue-600/10"
           >
             <TrendingUp className="h-4 w-4 mr-2" />
             History
