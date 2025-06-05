@@ -56,24 +56,24 @@ export const QuickActions = () => {
 
   return (
     <Card className="bg-white/95 border-blue-200 shadow-xl shadow-blue-500/10">
-      <CardHeader>
-        <CardTitle className="text-blue-900">Quick Actions</CardTitle>
+      <CardHeader className="pb-3 sm:pb-6">
+        <CardTitle className="text-blue-900 text-lg sm:text-xl">Quick Actions</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {actions.map((action, index) => (
             <Button
               key={index}
               variant="outline"
-              className={`h-auto p-4 flex flex-col items-center gap-3 ${action.color} ${
+              className={`h-auto p-3 sm:p-4 flex flex-col items-center gap-2 sm:gap-3 ${action.color} ${
                 action.disabled ? 'opacity-50 cursor-not-allowed' : ''
               }`}
               disabled={action.disabled}
             >
               <div className="relative">
-                <action.icon className="h-8 w-8" />
+                <action.icon className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8" />
                 {action.badge && (
-                  <span className={`absolute -top-2 -right-2 px-1 py-0.5 text-xs rounded-full ${
+                  <span className={`absolute -top-1 -right-1 sm:-top-2 sm:-right-2 px-1 py-0.5 text-xs rounded-full ${
                     action.badge === "Verified" ? "bg-green-500 text-white" : 
                     action.badge === "Required" ? "bg-red-500 text-white" : 
                     "bg-orange-500 text-white"
@@ -83,8 +83,8 @@ export const QuickActions = () => {
                 )}
               </div>
               <div className="text-center">
-                <p className="font-medium text-sm">{action.title}</p>
-                <p className="text-xs opacity-80">{action.description}</p>
+                <p className="font-medium text-xs sm:text-sm leading-tight">{action.title}</p>
+                <p className="text-xs opacity-80 hidden sm:block">{action.description}</p>
               </div>
             </Button>
           ))}
