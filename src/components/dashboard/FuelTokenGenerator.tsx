@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Fuel, Zap, MapPin, Clock, Copy } from "lucide-react";
+import { Fuel, Zap, Clock, Copy } from "lucide-react";
 import { useProfile } from "@/hooks/useProfile";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
@@ -30,7 +30,7 @@ export const FuelTokenGenerator = () => {
 
   const generateAIToken = () => {
     // AI-powered token generation algorithm
-    const prefix = profile?.platform.toUpperCase() || 'EF';
+    const prefix = 'EF'; // EasyFuel prefix
     const timestamp = Date.now().toString(36).toUpperCase();
     const random = Math.random().toString(36).substr(2, 6).toUpperCase();
     const checksum = (fuelAmount * 100).toString(36).toUpperCase();
@@ -130,11 +130,11 @@ export const FuelTokenGenerator = () => {
 
   if (!profile?.id_verified) {
     return (
-      <Card className="bg-black/95 border-red-500/30 shadow-xl shadow-red-500/20">
+      <Card className="bg-white/95 border-red-300 shadow-xl shadow-red-500/20">
         <CardContent className="text-center py-8">
-          <Fuel className="h-16 w-16 text-red-400 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-red-400 mb-2">ID Verification Required</h3>
-          <p className="text-yellow-500/80">Complete ID verification to generate fuel tokens</p>
+          <Fuel className="h-16 w-16 text-red-500 mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-red-600 mb-2">ID Verification Required</h3>
+          <p className="text-red-500/80">Complete ID verification to generate fuel tokens</p>
         </CardContent>
       </Card>
     );
@@ -142,34 +142,34 @@ export const FuelTokenGenerator = () => {
 
   if (vehicles.length === 0) {
     return (
-      <Card className="bg-black/95 border-orange-500/30 shadow-xl shadow-orange-500/20">
+      <Card className="bg-white/95 border-orange-300 shadow-xl shadow-orange-500/20">
         <CardContent className="text-center py-8">
-          <Fuel className="h-16 w-16 text-orange-400 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-orange-400 mb-2">Vehicle Required</h3>
-          <p className="text-yellow-500/80">Add a vehicle to generate fuel tokens</p>
+          <Fuel className="h-16 w-16 text-orange-500 mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-orange-600 mb-2">Vehicle Required</h3>
+          <p className="text-orange-500/80">Add a vehicle to generate fuel tokens</p>
         </CardContent>
       </Card>
     );
   }
 
   return (
-    <Card className="bg-black/95 border-yellow-500/30 shadow-xl shadow-yellow-500/20">
+    <Card className="bg-white/95 border-blue-200 shadow-xl shadow-blue-500/10">
       <CardHeader>
-        <CardTitle className="text-yellow-400 flex items-center gap-2">
+        <CardTitle className="text-blue-900 flex items-center gap-2">
           <Fuel className="h-5 w-5" />
           AI Fuel Token Generator
-          <Zap className="h-4 w-4 text-green-400" />
+          <Zap className="h-4 w-4 text-green-500" />
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         {!generatedToken ? (
           <div className="space-y-4">
             <div>
-              <Label className="text-yellow-300">Select Vehicle</Label>
+              <Label className="text-blue-800">Select Vehicle</Label>
               <select
                 value={selectedVehicle}
                 onChange={(e) => setSelectedVehicle(e.target.value)}
-                className="w-full p-2 bg-black/60 border border-yellow-500/30 rounded-md text-yellow-300"
+                className="w-full p-2 bg-white border border-blue-300 rounded-md text-blue-900"
               >
                 <option value="">Choose a vehicle...</option>
                 {vehicles.map((vehicle) => (
@@ -181,13 +181,13 @@ export const FuelTokenGenerator = () => {
             </div>
 
             <div>
-              <Label className="text-yellow-300">Fuel Amount (Liters)</Label>
+              <Label className="text-blue-800">Fuel Amount (Liters)</Label>
               <div className="flex gap-2">
                 <Input
                   type="number"
                   value={fuelAmount || ''}
                   onChange={(e) => setFuelAmount(parseFloat(e.target.value) || 0)}
-                  className="bg-black/60 border-yellow-500/30"
+                  className="bg-white border-blue-300"
                   placeholder="Enter liters"
                   min="1"
                   max={selectedVehicleData?.fuel_tank_capacity || 100}
@@ -198,31 +198,31 @@ export const FuelTokenGenerator = () => {
                   onClick={fillTank}
                   disabled={!selectedVehicleData}
                   variant="outline"
-                  className="border-yellow-500/50 text-yellow-400"
+                  className="border-blue-300 text-blue-700"
                 >
                   Full Tank
                 </Button>
               </div>
               {selectedVehicleData && (
-                <p className="text-xs text-yellow-500/70 mt-1">
+                <p className="text-xs text-blue-600/70 mt-1">
                   Max: {selectedVehicleData.fuel_tank_capacity}L for {selectedVehicleData.make} {selectedVehicleData.model}
                 </p>
               )}
             </div>
 
             {fuelAmount > 0 && (
-              <div className="p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+              <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
                 <div className="flex justify-between items-center">
-                  <span className="text-yellow-300">Estimated Cost:</span>
-                  <span className="text-yellow-400 font-bold">R{estimatedCost.toFixed(2)}</span>
+                  <span className="text-blue-800">Estimated Cost:</span>
+                  <span className="text-blue-900 font-bold">R{estimatedCost.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-yellow-500/80">Price per liter:</span>
-                  <span className="text-yellow-400">R{currentFuelPrice.toFixed(2)}</span>
+                  <span className="text-blue-600">Price per liter:</span>
+                  <span className="text-blue-700">R{currentFuelPrice.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-yellow-500/80">Available Credit:</span>
-                  <span className="text-yellow-400">
+                  <span className="text-blue-600">Available Credit:</span>
+                  <span className="text-blue-700">
                     R{((fuelCredits?.credit_limit || 0) - (fuelCredits?.balance || 0)).toFixed(2)}
                   </span>
                 </div>
@@ -232,7 +232,7 @@ export const FuelTokenGenerator = () => {
             <Button
               onClick={handleGenerateToken}
               disabled={!canGenerate || loading}
-              className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white"
+              className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white"
             >
               {loading ? "Generating..." : "Generate AI Fuel Token"}
             </Button>
@@ -240,22 +240,22 @@ export const FuelTokenGenerator = () => {
         ) : (
           <div className="space-y-4">
             <div className="text-center">
-              <div className="p-6 bg-green-500/10 border border-green-500/30 rounded-lg">
-                <Fuel className="h-12 w-12 text-green-400 mx-auto mb-3" />
-                <h3 className="text-lg font-semibold text-green-400 mb-2">Token Generated Successfully!</h3>
+              <div className="p-6 bg-green-50 border border-green-200 rounded-lg">
+                <Fuel className="h-12 w-12 text-green-600 mx-auto mb-3" />
+                <h3 className="text-lg font-semibold text-green-700 mb-2">Token Generated Successfully!</h3>
                 
                 <div className="space-y-3">
-                  <div className="p-3 bg-black/50 rounded-lg">
-                    <p className="text-xs text-yellow-500/80 mb-1">Fuel Token Code</p>
+                  <div className="p-3 bg-white rounded-lg border">
+                    <p className="text-xs text-blue-600 mb-1">Fuel Token Code</p>
                     <div className="flex items-center gap-2">
-                      <code className="text-lg font-mono text-yellow-400 flex-1">
+                      <code className="text-lg font-mono text-blue-900 flex-1">
                         {generatedToken.token_code}
                       </code>
                       <Button
                         size="sm"
                         variant="outline"
                         onClick={() => copyToClipboard(generatedToken.token_code)}
-                        className="border-yellow-500/50"
+                        className="border-blue-300"
                       >
                         <Copy className="h-4 w-4" />
                       </Button>
@@ -264,16 +264,16 @@ export const FuelTokenGenerator = () => {
 
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div>
-                      <p className="text-yellow-500/80">Fuel Amount</p>
-                      <p className="text-yellow-400 font-semibold">{generatedToken.fuel_amount_liters}L</p>
+                      <p className="text-blue-600">Fuel Amount</p>
+                      <p className="text-blue-900 font-semibold">{generatedToken.fuel_amount_liters}L</p>
                     </div>
                     <div>
-                      <p className="text-yellow-500/80">Cost</p>
-                      <p className="text-yellow-400 font-semibold">R{generatedToken.estimated_cost.toFixed(2)}</p>
+                      <p className="text-blue-600">Cost</p>
+                      <p className="text-blue-900 font-semibold">R{generatedToken.estimated_cost.toFixed(2)}</p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 text-sm text-orange-400">
+                  <div className="flex items-center gap-2 text-sm text-orange-600">
                     <Clock className="h-4 w-4" />
                     <span>Expires: {new Date(generatedToken.expires_at).toLocaleString()}</span>
                   </div>
@@ -282,8 +282,8 @@ export const FuelTokenGenerator = () => {
             </div>
 
             <div className="space-y-2">
-              <h4 className="text-yellow-400 font-semibold">How to use:</h4>
-              <div className="text-sm text-yellow-500/80 space-y-1">
+              <h4 className="text-blue-900 font-semibold">How to use:</h4>
+              <div className="text-sm text-blue-700 space-y-1">
                 <p>1. Present this token code at any participating fuel station</p>
                 <p>2. Station attendant will verify and process your fuel request</p>
                 <p>3. Amount will be deducted from your EasyFuel credit balance</p>
@@ -294,7 +294,7 @@ export const FuelTokenGenerator = () => {
             <Button
               onClick={() => setGeneratedToken(null)}
               variant="outline"
-              className="w-full border-yellow-500/50"
+              className="w-full border-blue-300 text-blue-700"
             >
               Generate Another Token
             </Button>

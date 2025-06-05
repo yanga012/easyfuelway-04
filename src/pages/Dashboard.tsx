@@ -29,11 +29,11 @@ const DashboardContent = () => {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 bg-clip-text text-transparent">
-              {profile?.full_name ? `Welcome back, ${profile.full_name}!` : 'Welcome to QuickScan Fuel!'}
+              {profile?.full_name ? `Welcome back, ${profile.full_name}!` : 'Welcome to EasyFuel!'}
             </h1>
             {user && (
               <p className="text-blue-600/80 mt-1">
-                {user.email} • {profile?.platform?.toUpperCase() || 'Platform'} Driver
+                {user.email} • Fuel Purchase Account
               </p>
             )}
           </div>

@@ -19,10 +19,10 @@ export const ProfileSection = () => {
         </Avatar>
         <div>
           <h3 className="text-lg font-semibold text-blue-900">
-            {profile?.full_name || 'Driver'}
+            {profile?.full_name || 'User'}
           </h3>
           <div className="text-sm text-blue-700 space-y-1">
-            <p>{profile?.platform?.toUpperCase() || 'Platform'} Driver</p>
+            <p>Fuel Account Holder</p>
             {profile?.id_number && <p>ID: {profile.id_number}</p>}
             <p className="text-blue-600">{user?.email}</p>
           </div>

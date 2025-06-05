@@ -4,13 +4,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -18,7 +11,6 @@ const Auth = () => {
   const { signIn, signUp } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [platform, setPlatform] = useState("");
   const [fullName, setFullName] = useState("");
   const [idNumber, setIdNumber] = useState("");
   const [loading, setLoading] = useState(false);
@@ -26,16 +18,6 @@ const Auth = () => {
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
-    if (!platform) {
-      toast({
-        title: "Platform Required",
-        description: "Please select your e-hailing platform",
-        variant: "destructive",
-      });
-      setLoading(false);
-      return;
-    }
 
     const { error } = await signIn(email, password);
     
@@ -58,7 +40,7 @@ const Auth = () => {
     e.preventDefault();
     setLoading(true);
 
-    if (!platform || !fullName || !idNumber) {
+    if (!fullName || !idNumber) {
       toast({
         title: "Missing Information",
         description: "Please fill in all required fields",
@@ -85,7 +67,7 @@ const Auth = () => {
             id: userData.user.id,
             full_name: fullName,
             id_number: idNumber,
-            platform: platform,
+            platform: 'general',
           });
         }
       } catch (profileError) {
@@ -101,47 +83,36 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black/90 via-black/80 to-black/70">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-blue-100">
       <div className="w-full max-w-md px-4">
-        <div className="bg-black/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 space-y-8 border border-[#F97316]/20">
+        <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 space-y-8 border border-blue-200">
           <div className="space-y-2 text-center">
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-[#F97316] to-[#FBBF24] bg-clip-text text-transparent">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
               EasyFuel
             </h1>
-            <p className="text-[#F97316]/80 text-sm">
-              AI-powered fuel credit management
+            <p className="text-blue-600/80 text-sm">
+              Smart fuel purchasing platform
             </p>
           </div>
 
           <Tabs defaultValue="signin" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 bg-black/60">
-              <TabsTrigger value="signin" className="data-[state=active]:bg-yellow-500/20 data-[state=active]:text-yellow-400">
+            <TabsList className="grid w-full grid-cols-2 bg-blue-50">
+              <TabsTrigger value="signin" className="data-[state=active]:bg-blue-500 data-[state=active]:text-white">
                 Sign In
               </TabsTrigger>
-              <TabsTrigger value="signup" className="data-[state=active]:bg-yellow-500/20 data-[state=active]:text-yellow-400">
+              <TabsTrigger value="signup" className="data-[state=active]:bg-blue-500 data-[state=active]:text-white">
                 Sign Up
               </TabsTrigger>
             </TabsList>
 
             <TabsContent value="signin">
               <form onSubmit={handleSignIn} className="space-y-4">
-                <Select onValueChange={setPlatform} value={platform}>
-                  <SelectTrigger className="w-full bg-black/60 border-yellow-500/30 text-yellow-300 focus:border-yellow-400">
-                    <SelectValue placeholder="Select your e-hailing platform" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-black border-yellow-500/30">
-                    <SelectItem value="uber">Uber</SelectItem>
-                    <SelectItem value="bolt">Bolt</SelectItem>
-                    <SelectItem value="indidi">InDidi</SelectItem>
-                  </SelectContent>
-                </Select>
-
                 <Input
                   type="email"
                   placeholder="Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-black/60 border-yellow-500/30 text-yellow-300 placeholder:text-yellow-500/50 focus:border-yellow-400"
+                  className="bg-white border-blue-300 text-blue-900 placeholder:text-blue-500/50 focus:border-blue-500"
                   required
                 />
 
@@ -150,14 +121,14 @@ const Auth = () => {
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="bg-black/60 border-yellow-500/30 text-yellow-300 placeholder:text-yellow-500/50 focus:border-yellow-400"
+                  className="bg-white border-blue-300 text-blue-900 placeholder:text-blue-500/50 focus:border-blue-500"
                   required
                 />
 
                 <Button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-black font-medium transition-all"
+                  className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium transition-all"
                 >
                   {loading ? "Signing In..." : "Sign In"}
                 </Button>
@@ -171,7 +142,7 @@ const Auth = () => {
                   placeholder="Full Name"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="bg-black/60 border-yellow-500/30 text-yellow-300 placeholder:text-yellow-500/50 focus:border-yellow-400"
+                  className="bg-white border-blue-300 text-blue-900 placeholder:text-blue-500/50 focus:border-blue-500"
                   required
                 />
 
@@ -180,28 +151,17 @@ const Auth = () => {
                   placeholder="ID Number (13 digits)"
                   value={idNumber}
                   onChange={(e) => setIdNumber(e.target.value)}
-                  className="bg-black/60 border-yellow-500/30 text-yellow-300 placeholder:text-yellow-500/50 focus:border-yellow-400"
+                  className="bg-white border-blue-300 text-blue-900 placeholder:text-blue-500/50 focus:border-blue-500"
                   maxLength={13}
                   required
                 />
-
-                <Select onValueChange={setPlatform} value={platform}>
-                  <SelectTrigger className="w-full bg-black/60 border-yellow-500/30 text-yellow-300 focus:border-yellow-400">
-                    <SelectValue placeholder="Select your e-hailing platform" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-black border-yellow-500/30">
-                    <SelectItem value="uber">Uber</SelectItem>
-                    <SelectItem value="bolt">Bolt</SelectItem>
-                    <SelectItem value="indidi">InDidi</SelectItem>
-                  </SelectContent>
-                </Select>
 
                 <Input
                   type="email"
                   placeholder="Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-black/60 border-yellow-500/30 text-yellow-300 placeholder:text-yellow-500/50 focus:border-yellow-400"
+                  className="bg-white border-blue-300 text-blue-900 placeholder:text-blue-500/50 focus:border-blue-500"
                   required
                 />
 
@@ -210,7 +170,7 @@ const Auth = () => {
                   placeholder="Password (min 6 characters)"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="bg-black/60 border-yellow-500/30 text-yellow-300 placeholder:text-yellow-500/50 focus:border-yellow-400"
+                  className="bg-white border-blue-300 text-blue-900 placeholder:text-blue-500/50 focus:border-blue-500"
                   required
                   minLength={6}
                 />
@@ -218,7 +178,7 @@ const Auth = () => {
                 <Button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-black font-medium transition-all"
+                  className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium transition-all"
                 >
                   {loading ? "Creating Account..." : "Create Account"}
                 </Button>
