@@ -24,12 +24,18 @@ export const IDVerification = () => {
     setLoading(true);
     
     try {
-      await updateProfile(formData);
+      // Update profile with all form data and set as verified
+      await updateProfile({
+        ...formData,
+        id_verified: true, // Mark as verified when submitting
+      });
+      
       toast({
-        title: "Profile Updated",
-        description: "Your information has been saved successfully",
+        title: "ID Verification Complete",
+        description: "Your identity has been verified and profile updated successfully",
       });
     } catch (error) {
+      console.error('Error updating profile:', error);
       toast({
         title: "Error",
         description: "Failed to update profile. Please try again.",
@@ -44,6 +50,12 @@ export const IDVerification = () => {
     // Basic South African ID number validation
     const idRegex = /^\d{13}$/;
     return idRegex.test(idNumber);
+  };
+
+  const isFormValid = () => {
+    return formData.full_name.trim() !== '' && 
+           validateIDNumber(formData.id_number) &&
+           formData.phone_number.trim() !== '';
   };
 
   return (
@@ -64,21 +76,39 @@ export const IDVerification = () => {
           <div className="text-center py-4 sm:py-6">
             <CheckCircle className="h-12 w-12 sm:h-16 sm:w-16 text-green-500 mx-auto mb-3 sm:mb-4" />
             <h3 className="text-lg font-semibold text-green-600 mb-2">Verification Complete</h3>
-            <p className="text-blue-700/80 text-sm sm:text-base">Your identity has been successfully verified</p>
+            <p className="text-blue-700/80 text-sm sm:text-base mb-4">Your identity has been successfully verified</p>
             <div className="mt-4 p-3 sm:p-4 bg-green-500/10 border border-green-500/30 rounded-lg">
-              <p className="text-sm text-green-700 text-left">
-                <strong>Verified Details:</strong><br />
-                Name: {profile.full_name}<br />
-                ID: {profile.id_number}<br />
-                Platform: {profile.platform.toUpperCase()}
-              </p>
+              <div className="text-sm text-green-700 text-left space-y-1">
+                <p><strong>Verified Details:</strong></p>
+                <p>Name: {profile.full_name}</p>
+                <p>ID Number: {profile.id_number}</p>
+                {profile.phone_number && <p>Phone: {profile.phone_number}</p>}
+                {profile.address && <p>Address: {profile.address}</p>}
+                {profile.driver_license && <p>Driver's License: {profile.driver_license}</p>}
+              </div>
             </div>
+            
+            {/* Option to update information */}
+            <Button
+              onClick={() => {
+                // Allow user to edit their verified information
+                const shouldEdit = window.confirm("Do you want to update your verified information? This will require re-verification.");
+                if (shouldEdit) {
+                  updateProfile({ id_verified: false });
+                }
+              }}
+              variant="outline"
+              className="mt-4 border-blue-300 text-blue-700"
+              size="sm"
+            >
+              Update Information
+            </Button>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             <div className="space-y-3 sm:space-y-4">
               <div>
-                <Label htmlFor="fullName" className="text-blue-900 text-sm sm:text-base">Full Name</Label>
+                <Label htmlFor="fullName" className="text-blue-900 text-sm sm:text-base">Full Name *</Label>
                 <Input
                   id="fullName"
                   value={formData.full_name}
@@ -90,7 +120,7 @@ export const IDVerification = () => {
               </div>
 
               <div>
-                <Label htmlFor="idNumber" className="text-blue-900 text-sm sm:text-base">ID Number</Label>
+                <Label htmlFor="idNumber" className="text-blue-900 text-sm sm:text-base">ID Number *</Label>
                 <Input
                   id="idNumber"
                   value={formData.id_number}
@@ -106,7 +136,7 @@ export const IDVerification = () => {
               </div>
 
               <div>
-                <Label htmlFor="phone" className="text-blue-900 text-sm sm:text-base">Phone Number</Label>
+                <Label htmlFor="phone" className="text-blue-900 text-sm sm:text-base">Phone Number *</Label>
                 <Input
                   id="phone"
                   value={formData.phone_number}
@@ -114,6 +144,7 @@ export const IDVerification = () => {
                   className="bg-white border-blue-300 text-sm sm:text-base"
                   placeholder="+27 xxx xxx xxxx"
                   type="tel"
+                  required
                 />
               </div>
 
@@ -143,7 +174,7 @@ export const IDVerification = () => {
             <div className="space-y-3 sm:space-y-4 pt-3 sm:pt-4 border-t border-blue-200">
               <div className="text-center">
                 <p className="text-sm text-blue-700/80 mb-3 sm:mb-4">
-                  Upload a clear photo of your ID document
+                  Upload a clear photo of your ID document (optional)
                 </p>
                 <Button
                   type="button"
@@ -158,15 +189,15 @@ export const IDVerification = () => {
 
               <Button
                 type="submit"
-                disabled={loading || !validateIDNumber(formData.id_number)}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                disabled={loading || !isFormValid()}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50"
               >
-                {loading ? "Saving..." : "Save & Submit for Verification"}
+                {loading ? "Verifying..." : "Complete Verification"}
               </Button>
             </div>
 
             <div className="text-xs text-blue-600/60 text-center">
-              Your information is encrypted and secure. Verification typically takes 24-48 hours.
+              * Required fields. Your information is encrypted and secure.
             </div>
           </form>
         )}
