@@ -1,3 +1,4 @@
+
 import { Navigation } from "@/components/dashboard/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -46,7 +47,7 @@ const Support = () => {
               <h2 className="text-xl font-semibold text-yellow-400">Email Support</h2>
             </div>
             <p className="text-yellow-500/80 mb-4">Response within 24 hours</p>
-            <p className="font-semibold text-yellow-300">support@easyfuel.co.za</p>
+            <p className="font-semibold text-yellow-300">yskaal@moveeasy.co.za</p>
           </Card>
         </div>
 
